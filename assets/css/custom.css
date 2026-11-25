@@ -1,0 +1,48 @@
+/* Tech badge in "Why Us" section */
+.tech-badge {
+  background: rgb(17 34 64);
+  border: 1px solid rgb(26 58 95 / 0.8);
+  color: #94a3b8;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+.tech-badge:hover {
+  border-color: rgb(37 99 235 / 0.6);
+  color: #e2e8f0;
+  background: rgb(30 64 175 / 0.15);
+}
+
+/* Service tab button states */
+.tab-btn {
+  background: rgb(17 34 64);
+  border: 1px solid rgb(26 58 95);
+  color: #94a3b8;
+  transition: all 0.2s;
+}
+.tab-btn:hover {
+  border-color: rgb(37 99 235 / 0.6);
+  color: #e2e8f0;
+}
+.tab-btn.active-tab {
+  background: #1e40af;
+  border-color: #1e40af;
+  color: #fff;
+  box-shadow: 0 0 20px rgb(30 64 175 / 0.4);
+}
+
+/* HTMX indicator */
+.htmx-indicator {
+  display: none;
+}
+.htmx-request .htmx-indicator {
+  display: inline-flex;
+}
+
+/* Smooth section transitions */
+section {
+  scroll-margin-top: 4rem;
+}
