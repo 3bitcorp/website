@@ -70,6 +70,31 @@ document.querySelectorAll(
   revealObserver.observe(el);
 });
 
+/* ── Cloudflare Turnstile callbacks ────────── */
+let turnstileToken = null;
+
+window.onTurnstileSuccess = function (token) {
+  turnstileToken = token;
+  const btn = document.getElementById('cf-submit');
+  if (btn) {
+    btn.disabled = false;
+    btn.classList.remove('bg-royal/50', 'text-white/60', 'cursor-not-allowed');
+    btn.classList.add('bg-royal', 'text-white', 'hover:bg-royal-light', 'hover:-translate-y-0.5', 'shadow-xl', 'shadow-royal/40', 'hover:shadow-royal/60');
+  }
+  const err = document.getElementById('captcha-error');
+  if (err) err.classList.add('hidden');
+};
+
+window.onTurnstileError = function () {
+  turnstileToken = null;
+  const btn = document.getElementById('cf-submit');
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add('bg-royal/50', 'text-white/60', 'cursor-not-allowed');
+    btn.classList.remove('bg-royal', 'text-white', 'hover:bg-royal-light');
+  }
+};
+
 /* ── Contact form (static-site simulation) ─── */
 document.getElementById('contact-form')?.addEventListener('submit', e => {
   e.preventDefault();
@@ -82,9 +107,19 @@ document.getElementById('contact-form')?.addEventListener('submit', e => {
   const message = form.querySelector('#cf-message')?.value.trim();
   if (!name || !email || !message) return;
 
+  if (!turnstileToken) {
+    const err = document.getElementById('captcha-error');
+    if (err) err.classList.remove('hidden');
+    return;
+  }
+
   const btn = form.querySelector('#cf-submit');
   btn.disabled = true;
   btn.innerHTML = `<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>`;
 
+  // NOTE: When you add a backend, POST the form data + turnstileToken to your
+  // server endpoint and verify via:
+  // POST https://challenges.cloudflare.com/turnstile/v0/siteverify
+  // with secret=YOUR_SECRET&response=turnstileToken
   setTimeout(() => { wrapper.innerHTML = tpl.innerHTML; }, 900);
 });

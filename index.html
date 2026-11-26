@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="assets/3bitcorp-logo.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -571,8 +572,23 @@
                 class="form-input resize-none"></textarea>
             </div>
 
-            <button type="submit" id="cf-submit"
-              class="w-full py-4 rounded-xl bg-royal text-white font-bold text-base hover:bg-royal-light transition-all shadow-xl shadow-royal/40 hover:shadow-royal/60 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            <!-- Cloudflare Turnstile -->
+            <div class="flex justify-center">
+              <div class="cf-turnstile"
+                data-sitekey="0x4AAAAAAGTfRWeYIsYvo_6C"
+                data-theme="dark"
+                data-size="normal"
+                data-callback="onTurnstileSuccess"
+                data-error-callback="onTurnstileError">
+              </div>
+            </div>
+            <div id="captcha-error" class="hidden text-center text-sm text-red-400">
+              Please complete the security check before submitting.
+            </div>
+
+            <button type="submit" id="cf-submit" disabled
+              class="w-full py-4 rounded-xl bg-royal/50 text-white/60 font-bold text-base cursor-not-allowed flex items-center justify-center gap-2 transition-all"
+              aria-label="Send message (complete CAPTCHA first)">
               <span>Send Message</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
             </button>
