@@ -1,5 +1,7 @@
 # 3BitCorp Website
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/144b2056-e0cb-4648-b190-92405a8d8d90/deploy-status)](https://app.netlify.com/projects/3bitcorp/deploys)
+
 Company website for [3BitCorp](https://3bitcorp.com) — built with HTMX, Tailwind CSS (CDN), and Netlify Functions. No build step required.
 
 ## Stack
