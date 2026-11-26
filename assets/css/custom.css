@@ -1,48 +1,228 @@
-/* Tech badge in "Why Us" section */
-.tech-badge {
-  background: rgb(17 34 64);
-  border: 1px solid rgb(26 58 95 / 0.8);
+/* ── Navbar ───────────────────────────────────── */
+#navbar {
+  background: rgb(7 15 36 / 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgb(19 37 71 / 0.6);
+}
+#navbar.scrolled {
+  box-shadow: 0 4px 32px rgb(0 0 0 / 0.5);
+}
+
+.nav-link {
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: #94a3b8;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-link:hover { color: #fff; background: rgb(26 63 170 / 0.15); }
+
+.mobile-link {
+  display: block;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #94a3b8;
+  transition: color 0.15s, background 0.15s;
+}
+.mobile-link:hover { color: #fff; background: rgb(26 63 170 / 0.2); }
+
+/* ── Section helpers ──────────────────────────── */
+section { scroll-margin-top: 4rem; }
+.section-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #38c5f5; margin-bottom: 0.75rem; }
+.section-title   { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 1rem; }
+.section-sub     { max-width: 36rem; margin: 0 auto; color: #64748b; font-size: 1.0625rem; }
+
+/* ── Hero stats ───────────────────────────────── */
+.stat-card {
+  background: rgb(13 27 56 / 0.7);
+  border: 1px solid rgb(26 63 170 / 0.25);
+  border-radius: 1rem;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: rgb(26 63 170 / 0.6); }
+.stat-number { font-size: 2rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 0.25rem; }
+.stat-label  { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── Trust logos ──────────────────────────────── */
+.trust-logo {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #334155;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.trust-logo:hover { color: #64748b; }
+
+/* ── Service cards ────────────────────────────── */
+.service-card {
+  background: rgb(13 27 56 / 0.6);
+  border: 1px solid rgb(26 37 71 / 0.9);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.service-card:hover {
+  border-color: rgb(26 63 170 / 0.6);
+  box-shadow: 0 20px 60px rgb(26 63 170 / 0.12);
+  transform: translateY(-3px);
+}
+.featured-card {
+  background: linear-gradient(135deg, rgb(26 63 170 / 0.18) 0%, rgb(13 27 56 / 0.8) 100%);
+  border-color: rgb(26 63 170 / 0.4);
+}
+.svc-icon {
+  width: 2.75rem; height: 2.75rem;
+  border-radius: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.svc-title { font-size: 1.125rem; font-weight: 700; color: #fff; margin-top: 1.25rem; margin-bottom: 0.6rem; }
+.svc-desc  { color: #64748b; font-size: 0.875rem; line-height: 1.65; }
+.svc-bullet {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8125rem; color: #64748b;
+}
+.svc-bullet::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #38c5f5; flex-shrink: 0; }
+
+/* ── Why Us ───────────────────────────────────── */
+.why-card {
+  background: rgb(13 27 56 / 0.5);
+  border: 1px solid rgb(26 37 71);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  transition: border-color 0.2s;
+}
+.why-card:hover { border-color: rgb(26 63 170 / 0.5); }
+
+.tech-tag {
+  background: rgb(13 27 56 / 0.8);
+  border: 1px solid rgb(26 37 71);
+  color: #64748b;
   font-size: 0.8125rem;
   font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 2rem;
+  transition: all 0.2s;
+}
+.tech-tag:hover {
+  border-color: rgb(26 63 170 / 0.6);
+  color: #e2e8f0;
+  background: rgb(26 63 170 / 0.15);
+}
+
+/* ── Process steps ────────────────────────────── */
+.process-step {
+  background: rgb(13 27 56 / 0.5);
+  border: 1px solid rgb(26 37 71);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.process-step:hover {
+  border-color: rgb(26 63 170 / 0.5);
+  box-shadow: 0 8px 32px rgb(26 63 170 / 0.1);
+}
+.process-num {
+  width: 2.25rem; height: 2.25rem;
+  background: linear-gradient(135deg, #1a3faa, #3b6ef5);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem; font-weight: 800; color: #fff;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 0 20px rgb(26 63 170 / 0.5);
+}
+.process-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem; }
+.process-desc  { font-size: 0.8125rem; color: #64748b; line-height: 1.65; }
+
+/* ── Industries ───────────────────────────────── */
+.industry-card {
+  background: rgb(13 27 56 / 0.5);
+  border: 1px solid rgb(26 37 71);
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
-  padding: 0.75rem 0.5rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  font-size: 0.8125rem; font-weight: 600; color: #64748b;
+  transition: all 0.2s;
+  cursor: default;
+}
+.industry-card:hover {
+  border-color: rgb(26 63 170 / 0.5);
+  color: #e2e8f0;
+  background: rgb(26 63 170 / 0.1);
+  transform: translateY(-2px);
+}
+.industry-icon { font-size: 1.75rem; }
+
+/* ── Testimonials ─────────────────────────────── */
+.testimonial-card {
+  background: rgb(13 27 56 / 0.5);
+  border: 1px solid rgb(26 37 71);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s;
+}
+.testimonial-card:hover { border-color: rgb(26 63 170 / 0.4); }
+
+/* ── About contact rows ───────────────────────── */
+.contact-info-row {
+  display: flex; align-items: flex-start; gap: 0.875rem;
+  text-decoration: none;
+}
+.contact-icon {
+  width: 2.5rem; height: 2.5rem;
+  background: rgb(26 63 170 / 0.15);
+  border: 1px solid rgb(26 63 170 / 0.3);
   border-radius: 0.75rem;
-  transition: all 0.2s;
-}
-.tech-badge:hover {
-  border-color: rgb(37 99 235 / 0.6);
-  color: #e2e8f0;
-  background: rgb(30 64 175 / 0.15);
+  display: flex; align-items: center; justify-content: center;
+  color: #3b6ef5;
+  flex-shrink: 0;
 }
 
-/* Service tab button states */
-.tab-btn {
-  background: rgb(17 34 64);
-  border: 1px solid rgb(26 58 95);
-  color: #94a3b8;
-  transition: all 0.2s;
+/* ── About facts grid ─────────────────────────── */
+.about-fact {
+  background: rgb(13 27 56 / 0.5);
+  border: 1px solid rgb(26 37 71);
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  transition: border-color 0.2s;
 }
-.tab-btn:hover {
-  border-color: rgb(37 99 235 / 0.6);
-  color: #e2e8f0;
-}
-.tab-btn.active-tab {
-  background: #1e40af;
-  border-color: #1e40af;
+.about-fact:hover { border-color: rgb(26 63 170 / 0.4); }
+.about-fact-num   { font-size: 2.25rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 0.4rem; }
+.about-fact-label { font-size: 0.8125rem; color: #64748b; }
+
+/* ── Contact form ─────────────────────────────── */
+.form-label { display: block; font-size: 0.8125rem; font-weight: 500; color: #94a3b8; margin-bottom: 0.4rem; }
+.form-input {
+  width: 100%;
+  background: rgb(7 15 36);
+  border: 1px solid rgb(26 37 71);
   color: #fff;
-  box-shadow: 0 0 20px rgb(30 64 175 / 0.4);
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
 }
+.form-input::placeholder { color: #334155; }
+.form-input:focus {
+  border-color: rgb(26 63 170 / 0.7);
+  box-shadow: 0 0 0 3px rgb(26 63 170 / 0.15);
+}
+select.form-input { cursor: pointer; appearance: none; }
 
-/* HTMX indicator */
-.htmx-indicator {
-  display: none;
-}
-.htmx-request .htmx-indicator {
-  display: inline-flex;
-}
-
-/* Smooth section transitions */
-section {
-  scroll-margin-top: 4rem;
-}
+/* ── HTMX indicator ───────────────────────────── */
+.htmx-indicator { display: none; }
+.htmx-request .htmx-indicator { display: inline-flex; }
