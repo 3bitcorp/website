@@ -13,3 +13,30 @@
   from   = "/*"
   to     = "/index.html"
   status = 200
+
+# Security headers — allow Cloudflare Turnstile and CDN assets
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Allow Turnstile scripts, frames, and CDN resources.
+    # NOTE: 'unsafe-inline' is required for Tailwind CDN and inline styles.
+    Content-Security-Policy = '''
+      default-src 'self';
+      script-src  'self' 'unsafe-inline' 'unsafe-eval'
+                  https://challenges.cloudflare.com
+                  https://unpkg.com
+                  https://cdn.tailwindcss.com
+                  https://fonts.googleapis.com;
+      style-src   'self' 'unsafe-inline'
+                  https://fonts.googleapis.com
+                  https://cdn.tailwindcss.com;
+      font-src    'self' https://fonts.gstatic.com;
+      img-src     'self' data:;
+      connect-src 'self' https://challenges.cloudflare.com;
+      frame-src   https://challenges.cloudflare.com;
+      object-src  'none';
+    '''
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
