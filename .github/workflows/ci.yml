@@ -68,12 +68,17 @@ jobs:
           missing=0
 
           while IFS= read -r ref; do
-            # Strip query strings and anchors
+            # Strip query strings and hash fragments
             path="${ref%%\?*}"
             path="${path%%#*}"
-            # Skip CDN / absolute URLs
-            [[ "$path" == http* ]] && continue
-            [[ -z "$path" ]] && continue
+            # Skip anything that isn't a plain relative file path
+            [[ -z "$path" ]]           && continue  # empty
+            [[ "$path" == http* ]]     && continue  # absolute URL
+            [[ "$path" == "//"* ]]     && continue  # protocol-relative
+            [[ "$path" == mailto:* ]]  && continue  # email link
+            [[ "$path" == tel:* ]]     && continue  # phone link
+            [[ "$path" == javascript:* ]] && continue  # JS pseudo-link
+            [[ "$path" == "#"* ]]      && continue  # anchor-only
 
             if [ ! -f "$path" ]; then
               echo "  ✗ BROKEN ref: $path"
@@ -81,7 +86,7 @@ jobs:
             else
               echo "  ✓ $path"
             fi
-          done < <(grep -oP '(?<=src="|href=")[^"]+' index.html | grep -v '^#' | grep -v '^http')
+          done < <(grep -oP '(?<=src="|href=")[^"]+' index.html)
 
           if [ $missing -ne 0 ]; then
             echo ""
