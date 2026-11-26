@@ -95,8 +95,8 @@ window.onTurnstileError = function () {
   }
 };
 
-/* ── Contact form (static-site simulation) ─── */
-document.getElementById('contact-form')?.addEventListener('submit', e => {
+/* ── Contact form ──────────────────────────── */
+document.getElementById('contact-form')?.addEventListener('submit', async e => {
   e.preventDefault();
   const form    = e.target;
   const wrapper = document.getElementById('contact-form-wrapper');
@@ -117,9 +117,43 @@ document.getElementById('contact-form')?.addEventListener('submit', e => {
   btn.disabled = true;
   btn.innerHTML = `<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>`;
 
-  // NOTE: When you add a backend, POST the form data + turnstileToken to your
-  // server endpoint and verify via:
-  // POST https://challenges.cloudflare.com/turnstile/v0/siteverify
-  // with secret=YOUR_SECRET&response=turnstileToken
-  setTimeout(() => { wrapper.innerHTML = tpl.innerHTML; }, 900);
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        company: form.querySelector('#cf-company')?.value.trim() || '',
+        service: form.querySelector('#cf-service')?.value || '',
+        message,
+        turnstileToken,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      wrapper.innerHTML = tpl.innerHTML;
+    } else {
+      btn.disabled = false;
+      btn.innerHTML = `<span>Send Message</span>`;
+      const err = document.getElementById('captcha-error');
+      if (err) {
+        err.textContent = data.error || 'Something went wrong. Please try again.';
+        err.classList.remove('hidden');
+      }
+      // Reset Turnstile so user can retry
+      if (window.turnstile) window.turnstile.reset();
+      turnstileToken = null;
+    }
+  } catch {
+    btn.disabled = false;
+    btn.innerHTML = `<span>Send Message</span>`;
+    const err = document.getElementById('captcha-error');
+    if (err) {
+      err.textContent = 'Network error. Please check your connection and try again.';
+      err.classList.remove('hidden');
+    }
+  }
 });
